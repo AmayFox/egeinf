@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %} Изменить задание {% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskContentPage', id=task.id) }}"> Изменить задание </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskPicturePage', id=task.id) }}"> Изменить фото </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('api.EditTaskAnswerPage', id=task.id) }}"> Изменить вариант ответа </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskTagPage', id=task.id) }}"> Изменить тег </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskRatingPage', id=task.id) }}"> Изменить сложность </a>
+        </li>
+    </ul>
+    <br>
+    <div class="row">
+        {% include "editing/infoTask.html" %}
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-success" style="font-size: 1.5rem;">{{ success_text }}</p>
+                    <p class="text-danger" style="font-size: 1.5rem;">{{ error_text }}</p>
+                    <form action="{{ '/task/edit/answer/' + task.id|string }}" method="POST" name="answer-edit">
+                        <label for="input1"> Изменить итоговый ответ </label>
+                        <input type="text" id="input1" placeholder="Изменить" class="form-control" name="new-itog-answer">
+                        <br>
+
+                        <input type="submit" class="btn btn-success" value="Изменить" name="submit-itog-answer">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if fourAnswer %}
+        <hr>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5> Варианты ответа </h5>
+                        {% for i in answers %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="font-weight-bold"> Вариант #{{ loop.index }} </span>
+                                </div>
+                                <div class="col-md-8">
+                                    {{ i.content }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %} Регистрация {% endblock %}
+{% block reg_tab %} <li class="nav-item active"><a class="nav-link" href="/reg"> Зарегистрироваться </a></li> {% endblock %}
+
+{% block content %}
+<h2 class="text-center"> Регистрация </h2>
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <p class="text-center text-danger" style="font-size: 1.5rem;">{{ error_text }}</p>
+            <form action="/reg" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="input1" class="font-weight-bold"> Имя </label>
+                        {{ form.name(class_='form-control', type='text', id='input1', placeholder='Имя') }}
+                        {% for error in form.errors.name %}
+                            <span class="text-danger" style="font-size: 0.75rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="input2" class="font-weight-bold"> Логин </label>
+                        {{ form.login(class_='form-control', type='text', id='input2', placeholder='Логин') }}
+                        {% for error in form.errors.login %}
+                            <span class="text-danger" style="font-size: 0.75rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="input4" class="font-weight-bold"> Введите пароль </label>
+                        {{ form.password(class_='form-control', type='password', id='input4', placeholder='Пароль') }}
+                        {% for error in form.errors.password %}
+                            <span class="text-danger" style="font-size: 0.75rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="input5" class="font-weight-bold"> Подтвердите пароль </label>
+                        {{ form.confirmpass(class_='form-control', type='password', id='input5', placeholder='Пароль') }}
+                        {% for error in form.errors.confirmpass %}
+                            <span class="text-danger" style="font-size: 0.75rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <p class="text-center"><button type="submit" class="btn btn-primary"> Зарегистрироваться </button></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+<div class="col-md-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="font-weight-bold"> Условие </span>
+                </div>
+                <div class="col-md-8"> {{ task.content }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="font-weight-bold"> Ответ </span>
+                </div>
+                <div class="col-md-8"> {{ task.answer }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="font-weight-bold"> Тег </span>
+                </div>
+                <div class="col-md-8"> {{ task.tag }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="font-weight-bold"> Сложность </span>
+                </div>
+                <div class="col-md-8">
+                    {% for i in range(task.rating) %}
+                        <i class="fas fa-star"></i>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="font-weight-bold"> Класс </span>
+                </div>
+                <div class="col-md-8"> {{ task.grade }}</div>
+            </div>
+            {% if task.picture != '0' %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="font-weight-bold"> Картинка </span>
+                    </div>
+                    <div class="col-md-8"><img src="{{ url_for('static', filename='photos/uploads/' + task.picture) }}" alt="Ваша аватарка" class="img-fluid rounded" style="max-width: 100px;"></div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

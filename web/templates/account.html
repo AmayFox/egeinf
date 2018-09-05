@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %} Личный кабинет {% endblock %}
+
+{% block account_tab %} <li class="nav-item active"><a class="nav-link" href="/account"> {{ current_user.login }} </a></li> {% endblock %}
+
+{% block content %}
+    {% if current_user.grade == 0 %}
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="text-center"> Нам нужно познакомиться поближе. В каком Вы классе? </h4>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3 offset-md-4">
+                            <a href="{{ url_for('api.SetSmallGradeController')}}"><button type="button" class="btn btn-info"> 9 класс </button></a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="{{ url_for('api.SetBigGradeController')}}"><button type="button" class="btn btn-info"> 11 класс </button></a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <p class="text-center">
+                                После этого простого выбора Вы сможете посмотреть на свой настоящий личный кабинет. Ваш класс
+                                нам нужен для того, чтобы Вы готовились к правильному экзамену.
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-center"></p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <div class="card bg-light mb-3">
+                <div class="card-header"> Привет, {{ current_user.name }}</div>
+                <div class="card-body">
+                    <h3 class="card-title text-center"> Информация о Вас </h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"> Ваше имя </h5>
+                                    <p class="card-text">
+                                        {{ current_user.name}}
+                                    </p>
+                                    <a href="/edit/name" class="btn btn-warning"> Изменить </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"> Ваш пароль </h5>
+                                    <p class="card-text">
+                                        Мы шифруем пароли наших пользователей так, что их расшифровка невозможна.
+                                    </p>
+                                    <a href="/edit/password" class="btn btn-warning"> Изменить </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-6 offset-3">
+                            {% if current_user.photo == '0' %}
+                                <h4 class='text-center'> Поставьте себе аватарку! </h4>
+
+                                <p style="color: red; font-size: 0.7rem;" class='center'>{{ error_text_photo }}</p>
+                                <p style="color: green; font-size: 0.7rem;" class="center">{{ success_text }} </p>
+
+                                <form action="/account" method="POST" name='avatar' enctype=multipart/form-data>
+                                    {{ form1.hidden_tag() }}
+
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile" name=file>
+                                        <label class="custom-file-label" for="customFile"> Выберите фотографию </label>
+                                    </div>
+                                    <div>
+                                        {% for error in form1.errors.file %}
+                                            <p class="center"><span style="color: red; font-size: 0.7rem;">{{ error }}</span></p>
+                                        {% endfor %}
+                                    </div>
+
+                                    <br>
+                                    <div class="text-center">
+                                        {{ form1.submit_photo(class_='btn btn-primary', type='submit', value='Отправить')}}
+                                    </div>
+                                </form>
+                            {% else %}
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title"> Ваша аватарка </h5>
+                                        <img src="{{ url_for('static', filename='photos/uploads/' + current_user.photo|string) }}" alt="Ваша аватарка" class="img-fluid rounded" style="max-width: 300px;"><br><br>
+                                        <a href="/edit/photo" class="btn btn-warning"> Изменить </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+<div class="container">
+
+</div>
+{% endblock %}

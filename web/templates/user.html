@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %} Пользователь {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        {% if user.photo != '0' %}
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <img src="{{ url_for('static', filename='photos/uploads/' + user.photo|string) }}" alt="Аватарка" class="img-fluid rounded"><br><br>
+                </div>
+                <div class="col-md-9">
+                    <h1 class="display-4"> Пользователь {{ user.login }}</h1>
+                    <p class="lead">
+                        Это обычная страница другого пользователя. Здесь Вы можете найти самую простую информацию об этом пользователе.
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <h1 class="display-4"> Пользователь {{ user.login }}</h1>
+            <p class="lead">
+                Это обычная страница другого пользователя. Здесь Вы можете найти самую простую информацию об этом пользователе.
+            </p>
+        {% endif %}
+        <hr class="my-4">
+        <p>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-light"> Имя <span class="text-dark"> {{ user.name }} </span></li>
+                <li class="list-group-item list-group-item-light"> Почта <span class="text-dark"> {{ user.email }} </span></li>
+                <li class="list-group-item list-group-item-light"> Класс <span class="text-dark"> {{ user.grade }} </span></li>
+                <li class="list-group-item list-group-item-light"> Очки <span class="text-dark"> {{ score }} </span></li>
+                <li class="list-group-item list-group-item-light"> Max/очки <span class="text-dark"> {{ procent }}% </span></li>
+            </ul>
+        </p>
+    </div>
+</div>
+{% endblock %}

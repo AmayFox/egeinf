@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %} Изменить имя {% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active"> Имя </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit/email"> Почта </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit/password"> Пароль </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit/photo"> Аватарка </a>
+        </li>
+    </ul>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-success">{{ success_text }}</h4>
+                            <h5 class="card-title"> Ваше нынешнее имя - {{ current_user.name }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 offset-1">
+                    <form action="/edit/name" method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <label for="input1"> Введите новое имя </label>
+                        <div class="input-group mb-3">
+                            {{ form.name(class_='form-control', id='input1', type='text', placeholder='Новое имя') }}
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2"> Изменить </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

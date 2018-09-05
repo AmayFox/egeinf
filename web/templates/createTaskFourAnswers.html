@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %} Создать задание {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center"> Создать задание </h2>
+    <br>
+
+    <div class="card">
+        <div class="card-body">
+            <form action="/create/task/four/answer" method="POST" enctype=multipart/form-data>
+                {{ form.hidden_tag() }}
+                <div class="row">
+                    <div class="form-group col-md-8 offset-md-2">
+                        <label for="input1" class="font-weight-bold"> Задание </label>
+                        {{ form.content(class_='form-control', id='input1', type='text', placeholder='Напишите задание...') }}
+                        {% for error in form.errors.login %}
+                            <span class="text-danger" style="font-size: 0.75rem;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <label class="font-weight-bold"> Прикрепите фотографию, если необходимо </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" name=file>
+                            <label class="custom-file-label" for="customFile"> Выберите фотографию </label>
+                        </div>
+                        <div>
+                            {% for error in form.errors.file %}
+                                <p class="center"><span style="color: red; font-size: 0.7rem;">{{ error }}</span></p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <label for="input3" class="font-weight-bold"> Ответ </label>
+                        {{ form.answer1(class_='form-control', id='input3', type='text', placeholder='Ответ') }}
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <label for="input4" class="font-weight-bold"> Вариант ответа #2 </label>
+                        {{ form.answer2(class_='form-control', id='input4', type='text', placeholder='Ответ') }}
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <label for="input5" class="font-weight-bold"> Вариант ответа #3 </label>
+                        {{ form.answer3(class_='form-control', id='input5', type='text', placeholder='Ответ') }}
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <label for="input6" class="font-weight-bold"> Вариант ответа #4 </label>
+                        {{ form.answer4(class_='form-control', id='input6', type='text', placeholder='Ответ') }}
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <label for="input2" class="font-weight-bold"> Тег задания </label>
+                        {{ form.tag(class_='form-control', id='input2', type='text', placeholder='Тег') }}
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <label for="exampleFormControlSelect1" class="font-weight-bold"> Выбрите сложность </label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="select-rating">
+                            <option> 1 </option>
+                            <option> 2 </option>
+                            <option> 3 </option>
+                            <option> 4 </option>
+                            <option> 5 </option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <label class="font-weight-bold"> Выберите класс </label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="9">
+                            <label class="form-check-label" for="inlineRadio1"> 9 </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="11" checked>
+                            <label class="form-check-label" for="inlineRadio2"> 11 </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg" role="button"> Создать </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

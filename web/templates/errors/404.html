@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} Упс, 404! {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card text-center">
+        <div class="card-header">
+            Ошибка 404
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"> Вы немного заблудились </h5>
+            <p class="card-text">
+                Если Вы не хулиганили, то скорее всего, это вина разработчиков. Они уже в курсе всех событий, так что
+                скоро все починят. Сейчас мы Вам поможем выбраться из этого тупика - просто тыкайте в любую из этих кнопок.
+            </p>
+            <a href="/" class="btn btn-primary"> Главная </a>
+            {% if current_user.is_authenticated %}
+                <a href="/account" class="btn btn-primary">{{ current_user.login }}</a>
+            {% else %}
+                <a href="/scoreboard" class="btn btn-primary"> Скорборд </a>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            Решайте задания!
+        </div>
+    </div>
+</div>
+{% endblock %}

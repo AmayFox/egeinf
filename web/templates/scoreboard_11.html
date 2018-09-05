@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %} Скорборд 11 класса {% endblock %}
+
+{% block content %}
+<h2 class="text-center"> Скорборд </h2>
+<br>
+<div class="container">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="/scoreboard/11"> 11 класс </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/scoreboard/9"> 9 класс </a>
+        </li>
+    </ul>
+    <br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col"> # </th>
+                <th scope="col"> Логин </th>
+                <th scope="col"> Очки </th>
+                <th scope="col"> Очки/max </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in range(final|length) %}
+                <tr>
+                    <th>{{ i + 1}}</th>
+                    <td><a href="{{ url_for('api.ShowOtherUserPage', login=final[i][1]) }}">{{ final[i][1] }}</a></td>
+                    <td>{{ final[i][0] }}</td>
+                    <td>{{ final[i][2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

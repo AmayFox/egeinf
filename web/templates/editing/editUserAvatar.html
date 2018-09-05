@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %} Изменить аватар {% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/edit/name"> Имя </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit/email"> Почта </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/edit/password"> Пароль </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active"> Аватарка </a>
+        </li>
+    </ul>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-danger">{{ error_text }}</h4>
+                            {% if current_user.photo == '0' %}
+                                <h5 class="card-title"> У Вас пока нет аватарки </h5>
+                            {% else %}
+                                <h5 class="card-title"> Ваша нынешняя аватарка </h5>
+                                <img src="{{ url_for('static', filename='photos/uploads/' + current_user.photo|string) }}" alt="Ваша аватарка" class="img-fluid rounded" style="max-width: 300px;">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 offset-1">
+                    <form action="/edit/photo" method="POST" name='avatar' enctype=multipart/form-data>
+                        {{ form.hidden_tag() }}
+
+                        <label> Измените аватарку </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" name=file>
+                            <label class="custom-file-label" for="customFile"> Выберите фотографию </label>
+                        </div>
+                        <div>
+                            {% for error in form.errors.file %}
+                                <p class="center"><span style="color: red; font-size: 0.7rem;">{{ error }}</span></p>
+                            {% endfor %}
+                        </div>
+
+                        <br>
+                        <div class="text-center">
+                            {{ form.submit_photo(class_='btn btn-primary', type='submit', value='Отправить')}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

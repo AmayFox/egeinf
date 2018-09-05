@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %} Изменить задание {% endblock %}
+
+{% block content %}
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskContentPage', id=task.id) }}"> Изменить задание </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskPicturePage', id=task.id) }}"> Изменить фото </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskAnswerPage', id=task.id) }}"> Изменить вариант ответа </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('api.EditTaskTagPage', id=task.id) }}"> Изменить тег </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('api.EditTaskRatingPage', id=task.id) }}"> Изменить сложность </a>
+        </li>
+    </ul>
+    <br>
+    <div class="row">
+        {% include "editing/infoTask.html" %}
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-success" style="font-size: 1.5rem;">{{ success_text }}</p>
+                    <form action="{{ '/task/edit/tag/' + task.id|string }}" method="POST">
+                        {{ form.hidden_tag() }}
+
+                        <label for="input1"> Введите новый тег  </label>
+                        {{ form.tag(class_='form-control', id='input1', type='text', placeholder='Новый тег') }}
+                        {% for error in form.errors.tag %}
+                            <span class="text-danger" style="font-size: 0.75rem;">{{ error }}</span>
+                        {% endfor %}
+                        <br>
+                        <input type="submit" value="Изменить" name="submit-changes" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

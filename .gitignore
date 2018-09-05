@@ -1,0 +1,26 @@
+# python files
+*.pyc
+
+# virtual environment
+venv/
+
+# JetBrains IDE
+.idea
+
+__pycache__
+web/__pycache__
+
+.DS_Store
+web/.DS_Store
+
+# database
+database.sqlite
+monkeys.sqlite
+
+# Profile Photos
+web/static/photos/uploads/*
+!.gitkeep
+
+# Tasks
+web/static/tasks/*
+!.gitkeep

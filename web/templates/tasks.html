@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %} Задания {% endblock %}
+
+{% block tasks_tab %} <li class="nav-item active"><a class="nav-link" href="/tasks"> Задания </a></li> {% endblock %}
+
+{% block content %}
+    {% if current_user.role == 'admin' %}
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".bd-example-modal-lg">
+                                Создать задание
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"> Создание задания </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h4> Часть А </h4>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <a href="/create/task/one/answer">
+                                                                <i class="fas fa-edit" style="font-size: 3rem; color: black;"></i>
+                                                                <p> 1 вариант ответа </p>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a href="/create/task/four/answer">
+                                                                <i class="fas fa-tasks" style="font-size: 3rem; color: black;"></i>
+                                                                <p> 4 варианта ответа</p>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h4> Часть С </h4>
+                                                    <div class="text-center">
+                                                        <a href="/create/task/prog">
+                                                            <i class="fas fa-code" style="font-size: 3rem; color: black;"></i>
+                                                            <p> Программирование </p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> Закрыть </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if current_user.role == 'admin' %}
+                                <br><br>
+                                <a href="/show/tasks"><button class="btn btn-primary btn-lg" role="button"> Посмотреть все задания </button></a>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="/scoreboard/9"><h5 class="text-center"> 9 класс </h5></a>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Логин </th>
+                                                <th scope="col"> Очки </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for i in range(final9|length) %}
+                                                <tr>
+                                                    <th>{{ i + 1}}</th>
+                                                    <td><a href="{{ url_for('api.ShowOtherUserPage', login=final9[i][1]) }}">{{ final9[i][1] }}</a></td>
+                                                    <td>{{ final9[i][0] }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="/scoreboard/11"><h5 class="text-center"> 11 класс </h5></a>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Логин </th>
+                                                <th scope="col"> Очки </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {% for i in range(final11|length) %}
+                                                <tr>
+                                                    <th>{{ i + 1}}</th>
+                                                    <td><a href="{{ url_for('api.ShowOtherUserPage', login=final11[i][1]) }}">{{ final11[i][1] }}</a></td>
+                                                    <td>{{ final11[i][0] }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+<br>
+
+<div class="container">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"> Активные задания </a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> Сделанные задания</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> Задания на проверке </a>
+        </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"> # </th>
+                        <th scope="col"> Тип  </th>
+                        <th scope="col"> Задание </th>
+                        <th scope="col"> Сложность </th>
+                        <th scope="col"> Тег </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if actual|length == 0 %}
+                        <tr>
+                            <th colspan="5"> Актуальных заданий пока нет </th>
+                        </tr>
+                    {% else %}
+                        {% for i in actual %}
+                            <tr>
+                                <th scope="row"> {{ i.id }} </th>
+                                <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}"> {% if i.answer == 'PROG' %} Часть С {% else %} Часть А {% endif %} </a></td>
+                                <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}">{% if i.content|length > 30 %} {{ i.content[:30] + '...' }} {% else %} {{ i.content }} {% endif %}</a></td>
+                                <td> {{ i.rating }} </td>
+                                <td> {{ i.tag }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"> # </th>
+                        <th scope="col"> Тип  </th>
+                        <th scope="col"> Задание </th>
+                        <th scope="col"> Сложность </th>
+                        <th scope="col"> Тег </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if finished|length == 0 %}
+                        <tr>
+                            <th colspan="5"> Вы пока еще ничего не решили </th>
+                        </tr>
+                    {% else %}
+                        {% for i in finished %}
+                            <tr class="table-success">
+                                <th scope="row"> {{ i.id }} </th>
+                                <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}"> {% if i.answer == 'PROG' %} Часть С {% else %} Часть А {% endif %} </a></td>
+                                <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}">{% if i.content|length > 30 %} {{ i.content[:30] + '...' }} {% else %} {{ i.content }} {% endif %}</a></td>
+                                <td> {{ i.rating }} </td>
+                                <td> {{ i.tag }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"> # </th>
+                        <th scope="col"> Тип  </th>
+                        <th scope="col"> Задание </th>
+                        <th scope="col"> Сложность </th>
+                        <th scope="col"> Тег </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if checking|length == 0 %}
+                        <tr>
+                            <th colspan="5"> Заданий на проверке нет </th>
+                        </tr>
+                    {% else %}
+                        {% for i in checking %}
+                            <tr class="table-warning">
+                                <th scope="row"> {{ i.id }} </th>
+                                <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}"> {% if i.answer == 'PROG' %} Часть С {% else %} Часть А {% endif %} </a></td>
+                                <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}">{% if i.content|length > 30 %} {{ i.content[:30] + '...' }} {% else %} {{ i.content }} {% endif %}</a></td>
+                                <td> {{ i.rating }} </td>
+                                <td> {{ i.tag }} </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

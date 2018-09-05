@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %} Все задания {% endblock %}
+
+{% block content %}
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col"> # </th>
+                <th scope="col"> Тип  </th>
+                <th scope="col"> Задание </th>
+                <th scope="col"> Сложность </th>
+                <th scope="col"> Тег </th>
+                <th scope="col"> Класс </th>
+                <th scope="col"> Редактировать </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in tasks %}
+                <tr>
+                    <th scope="row"> {{ i.id }} </th>
+                    <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}"> {% if i.answer == 'PROG' %} Часть С {% else %} Часть А {% endif %} </a></td>
+                    <td><a href="{{ url_for('api.SolveTaskPage', id=i.id) }}">{% if i.content|length > 30 %} {{ i.content[:30] + '...' }} {% else %} {{ i.content }} {% endif %}</a></td>
+                    <td> {{ i.rating }} </td>
+                    <td> {{ i.tag }} </td>
+                    <td> {{ i.grade }}</td>
+                    <td><a class="text-success" href="{{ url_for('api.EditTaskContentPage', id=i.id) }}"><i class="fas fa-pen" style="font-size: 1.5rem;"></i></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
